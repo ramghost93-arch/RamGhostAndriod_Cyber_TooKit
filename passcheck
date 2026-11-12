@@ -1,0 +1,21 @@
+#!/data/data/com.termux/files/usr/bin/bash
+python - <<'PY'
+import getpass
+import string
+
+password = getpass.getpass("Enter a fictional/test password (input hidden): ")
+checks = {
+    "At least 12 characters": len(password) >= 12,
+    "Uppercase letter": any(c.isupper() for c in password),
+    "Lowercase letter": any(c.islower() for c in password),
+    "Number": any(c.isdigit() for c in password),
+    "Special character": any(c in string.punctuation for c in password),
+}
+print("\\n===== PASSWORD COMPOSITION CHECK =====")
+for label, passed in checks.items():
+    print(("[PASS] " if passed else "[FAIL] ") + label)
+score = sum(checks.values())
+print("\\nBasic checks: " + ("5/5" if score == 5 else f"{score}/5"))
+print("This simple checklist is not a password-strength guarantee.")
+print("Do not enter or share a real password in an untrusted tool.")
+PY

@@ -1,0 +1,17 @@
+#!/data/data/com.termux/files/usr/bin/bash
+echo "===== NETWORK DIAGNOSTICS ====="
+echo "Device: $(getprop ro.product.model)"
+echo
+echo "[LOCAL IP]"
+local_ip="$(hostname -I 2>/dev/null || true)"
+[ -n "$local_ip" ] && echo "$local_ip" || echo "Not available (Android may restrict this)"
+echo
+echo "[INTERNET CONNECTIVITY]"
+ping -c 3 -W 3 1.1.1.1
+echo
+echo "[DNS RESOLUTION]"
+nslookup google.com
+echo
+echo "[PUBLIC IP]"
+curl -sS --max-time 10 https://api.ipify.org || echo "Lookup unavailable"
+echo

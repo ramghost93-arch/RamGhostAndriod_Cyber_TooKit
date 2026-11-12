@@ -1,0 +1,34 @@
+#!/data/data/com.termux/files/usr/bin/bash
+while true; do
+  clear
+  echo "======================================"
+  echo "   RAMGHOST ANDROID CYBER TOOLKIT"
+  echo "======================================"
+  echo "1. Network diagnostics"
+  echo "2. Public IP lookup"
+  echo "3. DNS investigation"
+  echo "4. Website header inspector"
+  echo "5. Port scanner (authorized targets only)"
+  echo "6. Android system information"
+  echo "7. Password checker"
+  echo "8. Exit"
+  echo "======================================"
+  read -r -p "Choose an option: " choice
+  case "$choice" in
+    1) netcheck ;;
+    2) myip ;;
+    3) dnscheck ;;
+    4) webcheck ;;
+    5)
+      read -r -p "Authorized target IP/domain: " target
+      read -r -p "Mode (quick/services): " mode
+      portscan "$target" "${mode:-quick}"
+      ;;
+    6) sysinfo ;;
+    7) passcheck ;;
+    8) exit 0 ;;
+    *) echo "Invalid option." ;;
+  esac
+  echo
+  read -r -p "Press Enter to return to menu..."
+done

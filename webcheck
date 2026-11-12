@@ -1,0 +1,28 @@
+#!/data/data/com.termux/files/usr/bin/bash
+read -r -p "Enter public website (example.com): " input_url
+if [[ "$input_url" =~ ^https?:// ]]; then
+  url="$input_url"
+else
+  url="https://$input_url"
+fi
+if [[ ! "$url" =~ ^https?://[A-Za-z0-9.-]+(:[0-9]+)?(/[^[:space:]]*)?$ ]]; then
+  echo "Invalid URL. Enter a public website hostname, optionally with a path."
+  exit 1
+fi
+echo "===== WEBSITE HEADER INSPECTOR ====="
+headers="$(curl -sSIL --max-time 15 --max-redirs 5 "$url")" || {
+  echo "Unable to retrieve headers."
+  exit 1
+}
+printf '%s\\n' "$headers"
+echo
+echo "[COMMON SECURITY HEADERS]"
+for header in strict-transport-security content-security-policy x-content-type-options x-frame-options referrer-policy permissions-policy; do
+  if printf '%s\\n' "$headers" | grep -iq "^$header:"; then
+    echo "[PRESENT] $header"
+  else
+    echo "[NOT OBSERVED] $header"
+  fi
+done
+echo
+echo "Note: missing headers alone do not prove a website is vulnerable."

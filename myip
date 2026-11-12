@@ -1,0 +1,4 @@
+#!/data/data/com.termux/files/usr/bin/bash
+echo "===== PUBLIC IP LOOKUP ====="
+curl -sS --max-time 10 https://api.ipify.org
+echo

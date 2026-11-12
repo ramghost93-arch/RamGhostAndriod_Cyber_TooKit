@@ -1,0 +1,12 @@
+#!/data/data/com.termux/files/usr/bin/bash
+read -r -p "Enter domain (example.com): " domain
+if [[ ! "$domain" =~ ^[A-Za-z0-9.-]+$ ]] || [[ "$domain" == .* ]] || [[ "$domain" == *..* ]]; then
+  echo "Invalid domain."
+  exit 1
+fi
+echo "===== DNS INVESTIGATION: $domain ====="
+for record in A AAAA MX NS TXT CAA; do
+  echo
+  echo "[$record RECORD]"
+  dig +short "$domain" "$record"
+done

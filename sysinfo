@@ -1,0 +1,12 @@
+#!/data/data/com.termux/files/usr/bin/bash
+echo "===== ANDROID SYSTEM INFORMATION ====="
+echo
+echo "[DEVICE] $(getprop ro.product.model)"
+echo "[ANDROID VERSION] $(getprop ro.build.version.release)"
+echo "[ANDROID SDK] $(getprop ro.build.version.sdk)"
+echo "[PROCESSOR ABI] $(getprop ro.product.cpu.abi)"
+echo
+echo "[STORAGE]"
+df -h "$HOME"
+echo
+echo "[TERMUX PREFIX] $PREFIX"

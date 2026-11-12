@@ -1,0 +1,27 @@
+#!/data/data/com.termux/files/usr/bin/bash
+target="${1:-}"
+mode="${2:-quick}"
+
+if [[ ! "$target" =~ ^[A-Za-z0-9.-]+$ ]] || [[ "$target" == .* ]] || [[ "$target" == *..* ]]; then
+  echo "Usage: portscan <authorized-IP-or-domain> [quick|services]"
+  exit 1
+fi
+if [[ "$mode" != "quick" && "$mode" != "services" ]]; then
+  echo "Mode must be quick or services."
+  exit 1
+fi
+
+mkdir -p "$HOME/cyber-reports"
+report="$HOME/cyber-reports/scan_$(date +%Y%m%d_%H%M%S).txt"
+echo "Target: $target"
+echo "Mode: $mode"
+echo "Report: $report"
+echo "Only scan systems you own or have explicit permission to test."
+
+if [[ "$mode" == "services" ]]; then
+  nmap -sT -sV -Pn --top-ports 20 -oN "$report" "$target"
+else
+  nmap -sT -Pn --top-ports 100 --reason -oN "$report" "$target"
+fi
+echo
+echo "Report saved: $report"
