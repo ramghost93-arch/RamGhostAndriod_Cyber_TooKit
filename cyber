@@ -1,34 +1,61 @@
 #!/data/data/com.termux/files/usr/bin/bash
+
 while true; do
   clear
-  echo "======================================"
-  echo "   RAMGHOST ANDROID CYBER TOOLKIT"
-  echo "======================================"
-  echo "1. Network diagnostics"
-  echo "2. Public IP lookup"
-  echo "3. DNS investigation"
-  echo "4. Website header inspector"
-  echo "5. Port scanner (authorized targets only)"
-  echo "6. Android system information"
-  echo "7. Password checker"
-  echo "8. Exit"
-  echo "======================================"
-  read -r -p "Choose an option: " choice
+  echo "========================================"
+  echo "       RAMGHOST CYBER TOOLKIT V2.0"
+  echo "========================================"
+  echo " 1. Network diagnostics"
+  echo " 2. Public IP lookup"
+  echo " 3. DNS investigation"
+  echo " 4. WHOIS lookup"
+  echo " 5. Traceroute"
+  echo " 6. Website header inspector"
+  echo " 7. Authorized port scanner"
+  echo " 8. SSL/TLS certificate inspector"
+  echo " 9. Android system information"
+  echo "10. Password composition checker"
+  echo "11. SHA-256 file hashing"
+  echo "12. Generate diagnostic report"
+  echo "13. Create toolkit ZIP backup"
+  echo "14. Update Termux packages"
+  echo " 0. Exit"
+  echo "========================================"
+
+  read -r -p "Choose option: " choice
+
   case "$choice" in
     1) netcheck ;;
     2) myip ;;
     3) dnscheck ;;
-    4) webcheck ;;
+    4) whoischeck ;;
     5)
+      read -r -p "Hostname: " target
+      trace "$target"
+      ;;
+    6) webcheck ;;
+    7)
       read -r -p "Authorized target IP/domain: " target
       read -r -p "Mode (quick/services): " mode
       portscan "$target" "${mode:-quick}"
       ;;
-    6) sysinfo ;;
-    7) passcheck ;;
-    8) exit 0 ;;
+    8)
+      read -r -p "Hostname: " target
+      tlscheck "$target"
+      ;;
+    9) sysinfo ;;
+    10) passcheck ;;
+    11)
+      read -r -p "File path: " file
+      hashfile "$file"
+      ;;
+    12) report ;;
+    13) backup ;;
+    14) update ;;
+    0) exit 0 ;;
     *) echo "Invalid option." ;;
   esac
+
   echo
   read -r -p "Press Enter to return to menu..."
 done

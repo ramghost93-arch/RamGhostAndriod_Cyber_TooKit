@@ -1,0 +1,11 @@
+#!/data/data/com.termux/files/usr/bin/bash
+host="${1:-}"
+port="${2:-443}"
+if [[ ! "$host" =~ ^[A-Za-z0-9.-]+$ ]] || [[ "$host" == .* ]] || [[ "$host" == *..* ]] || [[ ! "$port" =~ ^[0-9]+$ ]] || (( port < 1 || port > 65535 )); then
+  echo "Usage: tlscheck <hostname> [port]"
+  exit 1
+fi
+command -v openssl >/dev/null || { echo "Install openssl-tool first."; exit 1; }
+echo "===== TLS CERTIFICATE: $host:$port ====="
+openssl s_client -connect "$host:$port" -servername "$host" </dev/null 2>/dev/null |
+  openssl x509 -noout -subject -issuer -dates -fingerprint -sha256

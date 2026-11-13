@@ -1,49 +1,98 @@
-# RamGhostAndriod_Cyber_TooKit
+RamGhost Android Cyber Toolkit V2.0
 
-A beginner-friendly Android cybersecurity learning toolkit for **Termux**.
+A beginner-friendly, non-root Android cybersecurity and network diagnostics toolkit for Termux.
 
-## Included tools
-- `cyber` — interactive menu
-- `netcheck` — basic connectivity and DNS diagnostics
-- `myip` — public IP lookup
-- `dnscheck` — common DNS record lookup
-- `webcheck` — HTTP response and common security-header inspection
-- `portscan` — basic Nmap scan of an authorized target
-- `sysinfo` — basic Android/Termux device information
-- `passcheck` — local password-composition checker
+Features
 
-> Use scanning features only on devices and networks you own or have explicit permission to assess. This toolkit does not exploit systems or guarantee security.
+1. Network diagnostics
+2. Public IP lookup
+3. DNS investigation
+4. WHOIS lookup
+5. Traceroute
+6. Website HTTP security header inspection
+7. Authorized Nmap port scanning
+8. SSL/TLS certificate inspection
+9. Android system information
+10. Local password composition checker
+11. SHA-256 file hashing
+12. Diagnostic report generation
+13. Toolkit ZIP backup
+14. Termux package updates
 
-## Install in Termux
+Included Scripts
 
-1. Install Termux from a trusted source and open it.
-2. Extract this ZIP into your phone's Downloads folder.
-3. In Termux, allow storage access:
-   ```bash
-   termux-setup-storage
-   ```
-4. Run the installer (adjust the path if you extracted it somewhere else):
-   ```bash
-   bash ~/storage/downloads/RamGhostAndriod_Cyber_TooKit/install.sh
-   ```
-5. Start the toolkit:
-   ```bash
-   cyber
-   ```
+Script| Purpose
+cyber| Interactive toolkit menu
+netcheck| Network diagnostics
+myip| Public IP lookup
+dnscheck| DNS record investigation
+whoischeck| WHOIS lookup
+trace| Traceroute
+portscan| Authorized Nmap scanning
+webcheck| HTTP header inspection
+tlscheck| SSL/TLS certificate inspection
+sysinfo| Android and Termux information
+passcheck| Password composition checker
+hashfile| SHA-256 file hashing
+report| Diagnostic report generation
+backup| Toolkit ZIP backup
+update| Termux package updates
+install.sh| Toolkit installer
 
-If your file manager extracts the folder under a different location, use that folder's actual path in step 4.
+Requirements
 
-## USB transfer
+- Android device
+- Termux
+- Internet connection
+- No root access required
 
-Copy the ZIP file to your phone using a USB cable, then extract it to `Internal Storage/Download/`. Open Termux and follow the install steps above. No GitHub account or upload is required.
+Installation
 
-## Reports
+Install Git:
 
-Port-scan reports are stored in:
-```text
-~/cyber-reports/
-```
+pkg update
+pkg install git
 
-## Android limitations
+Clone the repository:
 
-Android/Termux may restrict access to low-level network interfaces and Wi-Fi details. Some commands may therefore show limited information without root or additional Android permissions. Root is not required for the included basic features.
+git clone https://github.com/ramghost93-arch/RamGhostAndriod_Cyber_TooKit.git
+
+Enter the project:
+
+cd RamGhostAndriod_Cyber_TooKit
+
+Install the toolkit:
+
+bash install.sh
+
+Launch:
+
+cyber
+
+Usage Examples
+
+dnscheck
+tlscheck example.com
+trace example.com
+hashfile README.md
+report
+
+Reports and Backups
+
+Diagnostic reports are stored in:
+
+"~/cyber-reports/"
+
+Toolkit ZIP backups are stored in your Termux home directory.
+
+Safety and Responsible Use
+
+- Only scan devices and networks you own or have explicit permission to assess.
+- Do not use this toolkit for unauthorized access or disruption.
+- Password composition checks do not guarantee password security.
+- Results depend on network connectivity and Android/Termux limitations.
+- Intended for learning, troubleshooting, and defensive security.
+
+GitHub
+
+https://github.com/ramghost93-arch/RamGhostAndriod_Cyber_TooKit

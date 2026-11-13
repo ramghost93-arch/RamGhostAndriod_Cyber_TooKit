@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/bash
+read -r -p "Domain (example.com): " domain
+if [[ ! "$domain" =~ ^[A-Za-z0-9.-]+$ ]] || [[ "$domain" == .* ]] || [[ "$domain" == *..* ]]; then
+  echo "Invalid domain."
+  exit 1
+fi
+command -v whois >/dev/null || { echo "Install whois first."; exit 1; }
+echo "===== WHOIS: $domain ====="
+whois "$domain"

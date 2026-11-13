@@ -1,0 +1,13 @@
+#!/data/data/com.termux/files/usr/bin/bash
+command -v zip >/dev/null || { echo "Install zip first."; exit 1; }
+archive="$HOME/RamGhost-Toolkit-backup-$(date +%Y%m%d-%H%M%S).zip"
+scripts=(cyber netcheck myip dnscheck whoischeck trace portscan webcheck tlscheck sysinfo passcheck hashfile report backup update)
+for script in "${scripts[@]}"; do
+  [[ -f "$HOME/bin/$script" ]] && zip -j "$archive" "$HOME/bin/$script" >/dev/null
+done
+if [[ -f "$archive" ]]; then
+  echo "Backup created: $archive"
+else
+  echo "No installed toolkit commands found in ~/bin."
+  exit 1
+fi
