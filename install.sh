@@ -10,7 +10,7 @@ echo "===== RAMGHOST V2.0 INSTALLER ====="
 
 pkg update
 
-pkg install -y bash curl dnsutils iputils nmap python \
+pkg install -y bash curl dnsutils inetutils nmap python \
   whois traceroute openssl-tool coreutils zip
 
 mkdir -p "$HOME/bin" "$HOME/cyber-reports"
