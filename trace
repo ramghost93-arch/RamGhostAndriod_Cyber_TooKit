@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/bash
+target="${1:-}"
+if [[ ! "$target" =~ ^[A-Za-z0-9.-]+$ ]] || [[ "$target" == .* ]] || [[ "$target" == *..* ]]; then
+  echo "Usage: trace <authorized-host-or-IP>"
+  exit 1
+fi
+command -v traceroute >/dev/null || { echo "Install traceroute first."; exit 1; }
+echo "===== ROUTE TO $target ====="
+traceroute -m 20 -w 2 "$target"

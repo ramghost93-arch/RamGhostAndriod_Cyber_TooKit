@@ -1,0 +1,16 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+echo "===== RAMGHOST DEPENDENCY UPDATER ====="
+pkg update || exit 1
+
+echo
+echo "Checking available upgrades..."
+apt list --upgradable 2>/dev/null
+
+echo
+read -r -p "Upgrade installed packages now? (y/N): " answer
+if [[ "$answer" =~ ^[Yy]$ ]]; then
+  pkg upgrade -y
+else
+  echo "Package upgrade skipped."
+fi

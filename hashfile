@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/bash
+file="${1:-}"
+if [[ -z "$file" || ! -f "$file" ]]; then
+  echo "Usage: hashfile <file-path>"
+  exit 1
+fi
+echo "===== SHA-256 ====="
+sha256sum "$file"

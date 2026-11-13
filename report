@@ -1,0 +1,25 @@
+#!/data/data/com.termux/files/usr/bin/bash
+mkdir -p "$HOME/cyber-reports"
+out="$HOME/cyber-reports/diagnostic_$(date +%Y%m%d_%H%M%S).txt"
+{
+  echo "RAMGHOST DIAGNOSTIC REPORT"
+  echo "Date: $(date)"
+  echo "Device: $(getprop ro.product.model)"
+  echo "Android: $(getprop ro.build.version.release)"
+  echo
+  echo "===== STORAGE ====="
+  df -h "$HOME"
+  echo
+  echo "===== INTERNET CONNECTIVITY ====="
+  ping -c 3 -W 3 1.1.1.1 2>&1 || true
+  echo
+  echo "===== DNS ====="
+  nslookup google.com 2>&1 || true
+  echo
+  echo "===== PUBLIC IP ====="
+  curl -sS --max-time 10 https://api.ipify.org 2>&1 || true
+  echo
+  echo
+  echo "Report generated locally by RamGhost."
+} > "$out"
+echo "Report saved: $out"

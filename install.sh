@@ -2,29 +2,42 @@
 set -e
 
 if [ -z "${PREFIX:-}" ] || [ ! -d "$PREFIX" ]; then
-  echo "Please run this installer inside Termux on Android."
+  echo "Run this installer inside Termux."
   exit 1
 fi
 
-echo "[1/4] Updating package lists..."
-pkg update -y
+echo "===== RAMGHOST V2.0 INSTALLER ====="
 
-echo "[2/4] Installing required packages..."
-pkg install -y bash curl dnsutils iputils nmap python
+pkg update
 
-echo "[3/4] Installing toolkit commands..."
+pkg install -y bash curl dnsutils inetutils nmap python \
+  whois traceroute openssl-tool coreutils zip
+
 mkdir -p "$HOME/bin" "$HOME/cyber-reports"
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-for script in "$SCRIPT_DIR"/scripts/*; do
-  [ -f "$script" ] || continue
-  install -m 700 "$script" "$HOME/bin/$(basename "$script")"
+scripts=(
+  cyber netcheck myip dnscheck whoischeck trace portscan
+  webcheck tlscheck sysinfo passcheck hashfile report backup update
+)
+
+for script in "${scripts[@]}"; do
+  if [ -f "$SCRIPT_DIR/$script" ]; then
+    install -m 700 "$SCRIPT_DIR/$script" "$HOME/bin/$script"
+    echo "[INSTALLED] $script"
+  else
+    echo "[WARNING] Missing script: $script"
+  fi
 done
 
-if ! grep -Fq 'export PATH="$HOME/bin:$PATH"' "$HOME/.bashrc" 2>/dev/null; then
-  printf '\\n# RamGhost Android Cyber Toolkit\\nexport PATH="$HOME/bin:$PATH"\\n' >> "$HOME/.bashrc"
+if ! grep -Fq '# RamGhost Android Cyber Toolkit' "$HOME/.bashrc" 2>/dev/null; then
+  printf '\n# RamGhost Android Cyber Toolkit\nexport PATH="$HOME/bin:$PATH"\n' >> "$HOME/.bashrc"
 fi
 
-echo "[4/4] Installation complete."
-echo "Close and reopen Termux, or run: source ~/.bashrc"
-echo "Then start the toolkit with: cyber"
+export PATH="$HOME/bin:$PATH"
+
+echo
+echo "===== INSTALLATION COMPLETE ====="
+echo "Start toolkit with: cyber"
+echo "Reports folder: $HOME/cyber-reports"
